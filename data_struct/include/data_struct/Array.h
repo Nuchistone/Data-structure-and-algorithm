@@ -19,10 +19,8 @@ namespace data_struct
         Array(const Array& init);
         Array(Array&& init) noexcept;
         ~Array();
-        Array<T>& operator=(const Array& init);
-        Array<T>& operator=(Array&& init) noexcept;
-
-        void swap(Array& other) noexcept;
+        Array& operator=(const Array& init);
+        Array& operator=(Array&& init) noexcept;
 
         // getter
         T& operator[](std::size_t pos);     // "pos" for position
@@ -101,18 +99,21 @@ namespace data_struct
         iterator erase(iterator pos);
         iterator erase(iterator start_it, iterator end_it);
 
+        // swap
+        void swap(Array& other) noexcept;
+        
     private:
         std::size_t length_;
         std::size_t capacity_;
         T* data_;
-    };
+    };  // template class Array
 
     template <typename T>
     void swap(Array<T>& a, Array<T>& b) noexcept
     {
         a.swap(b);
     }
-}
+}   // namespace data_struct
 
 #include "Array.tpp"
 

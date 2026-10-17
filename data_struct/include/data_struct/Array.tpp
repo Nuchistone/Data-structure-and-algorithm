@@ -1,4 +1,5 @@
 #pragma once
+#include "Array.h"
 #include <memory>
 #include <utility>
 #include <cassert>
@@ -95,7 +96,7 @@ namespace data_struct
     }
 
     template <typename T>
-    Array<T>::Array(const Array<T>& init)
+    Array<T>::Array(const Array& init)
         : length_(0)
         , capacity_(init.length_)
         , data_(
@@ -146,15 +147,7 @@ namespace data_struct
     }
 
     template <typename T>
-    void Array<T>::swap(Array& other) noexcept
-    {
-        std::swap(length_, other.length_);
-        std::swap(capacity_, other.capacity_);
-        std::swap(data_, other.data_);
-    }
-
-    template <typename T>
-    Array<T>& Array<T>::operator=(const Array<T>& init)
+    Array<T>& Array<T>::operator=(const Array& init)
     {
         if (this != &init)
         {
@@ -165,7 +158,7 @@ namespace data_struct
     }
 
     template <typename T>
-    Array<T>& Array<T>::operator=(Array<T>&& init) noexcept
+    Array<T>& Array<T>::operator=(Array&& init) noexcept
     {
         if (this != &init)
         {
@@ -223,6 +216,7 @@ namespace data_struct
     T& Array<T>::front()
     {
         assert(length_ > 0 && "data_struct::Array::front(): front on empty Array");
+        
         return data_[0];
     }
 
@@ -230,6 +224,7 @@ namespace data_struct
     const T& Array<T>::front() const 
     {
         assert(length_ > 0 && "data_struct::Array::front(): front on empty Array"); 
+        
         return data_[0];
     }
 
@@ -237,6 +232,7 @@ namespace data_struct
     T& Array<T>::back()
     {
         assert(length_ > 0 && "data_struct::Array::end(): end on empty Array");
+        
         return data_[length_ - 1];
     }
 
@@ -244,6 +240,7 @@ namespace data_struct
     const T& Array<T>::back() const 
     {
         assert(length_ > 0 && "data_struct::Array::end(): end on empty Array");
+        
         return data_[length_ - 1];
     }
 
@@ -372,6 +369,7 @@ namespace data_struct
     void Array<T>::pop_back()
     {
         assert(length_ > 0 && "data_struct::Array::pop_back(): pop_back on empty array");
+        
         data_[--length_].~T();
     }
 
@@ -527,5 +525,14 @@ namespace data_struct
 
         length_ -= count;
         return data_ + start_index;
+    }
+
+    // swap
+    template <typename T>
+    void Array<T>::swap(Array& other) noexcept
+    {
+        std::swap(length_, other.length_);
+        std::swap(capacity_, other.capacity_);
+        std::swap(data_, other.data_);
     }
 }

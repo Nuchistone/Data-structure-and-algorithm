@@ -59,7 +59,7 @@ namespace test_util_details
     {
         fail(
             a == b,
-            std::string("CHECK_EQUAL(") + a_str + " == " + b_str +")",
+            std::string("CHECK_EQUAL(") + a_str + ", " + b_str +")",
             file,
             line
         );
@@ -379,6 +379,6 @@ inline int run_all_tests()
         std::cerr << std::endl;
     }
     std::cout << "passed: " << passed << ", failed: " << failed << std::endl;
-    // std::system("PAUSE");
+    std::system("PAUSE");
     return failed ? 1 : 0;
 }

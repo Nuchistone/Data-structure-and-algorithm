@@ -2,13 +2,17 @@
 
 ## About *Coding*
 
+### General
+
+1. Copy controls of ```T*``` has nothing to do with the ones of ```T```. Example: ```Node*``` and ```Node```, this is why Node doesn't need copy controllers.
+
 ### OOP tips for C++
 
 Exmaple: *Array*
 
 1. **The rule of 5**. In the five copy controller, difine all of them, or none of them;
 2. The realization of **copy constructor** and **copy assignment operator**. In order to make the two functions more robust:
-    1. Use **unique_ptr** in copy constructor.     This avoid the memory leaking when the assignment in the loop fails:
+    (1) Use **unique_ptr** in copy constructor.     This avoid the memory leaking when the assignment in the loop fails:
 
     ```C++
     template <typename T>
@@ -23,7 +27,7 @@ Exmaple: *Array*
     }
     ```
 
-    2. Use **swap** in copy assignment operator:
+    (2) Use **swap** in copy assignment operator:
 
     ```C++
     template <typename T>
@@ -53,6 +57,9 @@ Exmaple: *Array*
     Built-in types, like ```int```, is different. An int object itself is the resource, with no pointer managing the resource. So moving saves nothing comparing to copy when dealing with built-in types.
 
     This also help me to understand how array mannage resource. Arrays store the **mannager**, instead of the **resource**. Furthermore, when we say "arrays store continuously in physical memory", we means that **the physical address of the mannagers is continuous, not the address of the resources**. If the object in the array is not the built-in type, the resources could completely be sparsely assigned in the memory--it doesn't matter.
+
+Example: *List*
+1.**Using delegating constructors.** After using delegation, we can call the methods definded in the class to reuse the same logic in the constructor body. See the constructor receiving an ```initializer_list``` object in ```List```.
 
 ### Exception tips for C++
 

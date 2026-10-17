@@ -588,7 +588,7 @@ TEST_CASE(test_exception_safety_reserve_move)
     CHECK_EQUAL(a.length(), 5u);
 }
 
-int main()
-{
-    return run_all_tests();
-}
+// int main()
+// {
+//     return run_all_tests();
+// }
