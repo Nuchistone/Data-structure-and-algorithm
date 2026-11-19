@@ -7,7 +7,18 @@
 
 namespace data_struct
 {
+    // use try-catch to deal with exception thrown during
+    // allocation and construction
+    
+    // use ::operator new/delete and placement new/delete
+    // to guarantee performance by prohibiting unnecessray
+    // constructions
+
+
+    // ==============================
     // constructor, copy controller
+    // ==============================
+
     template <typename T>
     Array<T>::Array()
         : length_(0)
@@ -179,7 +190,10 @@ namespace data_struct
         return *this;
     }
 
+    // ==============================
     //getter
+    // ==============================
+
     template <typename T>
     T& Array<T>::operator[](std::size_t pos)
     {
@@ -244,7 +258,10 @@ namespace data_struct
         return data_[length_ - 1];
     }
 
+    // ==============================
     //capacity
+    // ==============================
+
     template <typename T>
     void Array<T>::reserve(std::size_t new_cap)
     {
@@ -332,16 +349,9 @@ namespace data_struct
         capacity_ = length_;
     }
 
-    template <typename T>
-    void Array<T>::clear() noexcept
-    {
-        for (std::size_t i = 0; i < length_; ++i)
-        {
-            data_[i].~T();
-        }
-
-        length_ = 0;
-    }
+    // ==============================
+    // mutator
+    // ==============================
 
     template <typename T>
     void Array<T>::push_back(const T& value)
@@ -527,7 +537,10 @@ namespace data_struct
         return data_ + start_index;
     }
 
+    // ==============================
     // swap
+    // ==============================
+
     template <typename T>
     void Array<T>::swap(Array& other) noexcept
     {
