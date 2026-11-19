@@ -331,8 +331,8 @@ TEST_CASE(test_list_exception_safety)
         CHECK_EQUAL(a.size(), 2u);
     }
 }
- 
-// int main()
-// {
-//     return run_all_tests();
-// }
+
+int main()
+{
+    return run_all_tests();
+}
