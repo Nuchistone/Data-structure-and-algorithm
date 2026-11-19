@@ -230,7 +230,10 @@ namespace data_struct
     }
 
     template <typename T>
-    void List<T>::splice(typename List<T>::iterator pos, List& other) noexcept
+    void List<T>::splice(
+        typename List<T>::iterator pos,
+        List& other
+    ) noexcept
     {
         if (this == &other || other.empty())
         {
@@ -293,7 +296,10 @@ namespace data_struct
 
     template <typename T>
     typename List<T>::iterator
-        List<T>::insert(List<T>::iterator pos, const T& value)
+    List<T>::insert(
+        List<T>::iterator pos,
+        const T& value
+    )
     {
         Node* newNode = new Node(value);
         Node* current = pos.node_;
@@ -304,13 +310,16 @@ namespace data_struct
         current->prev_ = newNode;
 
         ++size_;
-        
+
         return iterator(newNode);
     }
 
     template <typename T>
     typename List<T>::iterator
-        List<T>::insert(List<T>::iterator pos, T&& value)
+    List<T>::insert(
+        List<T>::iterator pos,
+        T&& value
+    )
     {
         Node* newNode = new Node(std::move(value));
         Node* current = pos.node_;
@@ -327,10 +336,10 @@ namespace data_struct
 
     template <typename T>
     typename List<T>::iterator
-        List<T>::erase(List<T>::iterator pos)
+    List<T>::erase(List<T>::iterator pos)
     {
         assert(pos != end() && "data_struct::List::erase: erase end()");
-        
+
         Node* current = pos.node_;
         current->prev_->next_ = current->next_;
         current->next_->prev_ = current->prev_;
@@ -343,7 +352,10 @@ namespace data_struct
 
     template <typename T>
     typename List<T>::iterator
-        List<T>::erase(List<T>::iterator start_it, List<T>::iterator end_it)
+    List<T>::erase(
+        List<T>::iterator start_it,
+        List<T>::iterator end_it
+    )
     {
         if (start_it == end_it)
         {
@@ -373,7 +385,7 @@ namespace data_struct
 
     template <typename T>
     typename List<T>::iterator
-        List<T>::find(const T& value)
+    List<T>::find(const T& value)
     {
         iterator it = begin();
         for ( ; it != end(); ++it)
@@ -388,7 +400,7 @@ namespace data_struct
 
     template <typename T>
     typename List<T>::const_iterator
-        List<T>::find(const T& value) const
+    List<T>::find(const T& value) const
     {
         const_iterator it = cbegin();
         for ( ; it != cend(); ++it)
