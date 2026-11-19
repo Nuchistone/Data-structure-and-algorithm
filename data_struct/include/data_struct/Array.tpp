@@ -535,4 +535,29 @@ namespace data_struct
         std::swap(capacity_, other.capacity_);
         std::swap(data_, other.data_);
     }
+
+    // ==============================
+    // operator
+    // ==============================
+
+    template <typename T>
+    bool operator==(
+        const Array<T>& lhs,
+        const Array<T>& rhs
+    )
+    {
+        if (lhs.length() != rhs.length())
+        {
+            return false;
+        }
+
+        for (std::size_t i = 0; i < lhs.length(); ++i)
+        {
+            if (lhs[i] != rhs[i])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }
