@@ -1,3 +1,9 @@
+# IDE configurations
 .vscode/
 
+# outputs
 output/
+out/
+
+# Doxygen
+html/
