@@ -301,6 +301,8 @@ namespace data_struct
         const T& value
     )
     {
+        // Allocate the new node at the very beginning,
+        // strong exception are auto guaranteed.
         Node* newNode = new Node(value);
         Node* current = pos.node_;
 
