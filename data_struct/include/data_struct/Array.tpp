@@ -270,7 +270,7 @@ namespace data_struct
         //     "data_struct::Array::reserve: reserve requires T to be nothrow-movable or copyable for strong exception safety"
         // );
 
-        if (capacity_ >= new_cap)
+        if (new_cap <= capacity_)
         {
             return;
         }
@@ -422,7 +422,10 @@ namespace data_struct
     }
 
     template <typename T>
-    void Array<T>::resize(std::size_t new_length, const T& init)
+    void Array<T>::resize(
+        std::size_t new_length,
+        const T& init
+    )
     {
         if (new_length > capacity_)
         {
@@ -460,8 +463,22 @@ namespace data_struct
     }
 
     template <typename T>
+    void Array<T>::clear() noexcept
+    {
+        for (std::size_t i = 0; i < length_; ++i)
+        {
+            data_[i].~T();
+        }
+
+        length_ = 0;
+    }
+
+    template <typename T>
     typename Array<T>::iterator
-        Array<T>::insert(Array<T>::iterator pos, const T& value)
+    Array<T>::insert(
+        Array<T>::iterator pos,
+        const T& value
+    )
     {
         assert(pos >= data_ && pos <= data_ + length_ && "data_struct::Array::insert: invalid iterator");
 
@@ -491,7 +508,7 @@ namespace data_struct
 
     template <typename T>
     typename Array<T>::iterator
-        Array<T>::erase(Array<T>::iterator pos)
+    Array<T>::erase(Array<T>::iterator pos)
     {
         assert(length_ > 0 && "data_struct::Array::erase: erase on empty Array");
         assert(pos >= data_ && pos < data_ + length_ && "data_struct::Array::erase: invalid iterator");
@@ -508,7 +525,10 @@ namespace data_struct
 
     template <typename T>
     typename Array<T>::iterator
-        Array<T>::erase(Array<T>::iterator start_it, Array<T>::iterator end_it)
+    Array<T>::erase(
+        Array<T>::iterator start_it,
+        Array<T>::iterator end_it
+    )
     {
         assert(start_it >= data_ && start_it <= data_ + length_ && "data_struct::Array::erase: invalid start iterator");
         assert(end_it >= data_ && end_it <= data_ + length_ && "data_struct::Array::erase: invalid end iterator");
