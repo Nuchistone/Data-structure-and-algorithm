@@ -101,6 +101,18 @@ namespace data_struct
 
         // swap
         void swap(Array& other) noexcept;
+
+        /**
+         * @brief Swap Arrays.
+         * @details Swaps head pointer `data_`, `length_` and `capacity`. O(1).
+         *          Calls the member method swap(), defined in BST.tpp.
+         */
+        friend void swap(Array<T>& a, Array<T>& b) noexcept
+        {
+            a.swap(b);
+        }
+
+        /** @} */   // name Array Swap
         
     private:
         std::size_t length_;
@@ -108,10 +120,31 @@ namespace data_struct
         T* data_;
     };  // template class Array
 
+    /**
+     * @name Array Operator
+     * @{
+     */
+
+    /**
+     * @brief Judges whether two Arrays has the same elements
+     *        in the same order; DO NOT judges `capacity_`.
+     * @tparam T The type of Array tempalte.
+     * @relates data_struct::Array.
+     */
     template <typename T>
-    void swap(Array<T>& a, Array<T>& b) noexcept
+    bool operator==(const Array<T>&, const Array<T>&);
+
+    /**
+     * @brief Judges whether two Arrays has different elements
+     *        or has the same elements but not in the same order;
+     *        DO NOT judges `capacity_`.
+     * @tparam T The type of Array tempalte.
+     * @relates data_struct::Array
+     */
+    template <typename T>
+    bool operator!=(const Array<T>& lhs, const Array<T>& rhs)
     {
-        a.swap(b);
+        return !(lhs == rhs);
     }
 }   // namespace data_struct
 
