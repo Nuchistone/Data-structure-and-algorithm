@@ -1,0 +1,39 @@
+{
+    "version": 8,
+    "configurePresets": [
+        {
+            "name": "wsl-gcc-debug",
+            "displayName": "WSL GCC Debug (Ninja + ASan)",
+            "description": "WSL env, gcc compiler, ASan auto on",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            }
+        },
+        {
+            "name": "win-mingw-debug",
+            "displayName": "Windows MinGW Debug (Makefiles)",
+            "description": "Windows, MinGW GCC, debug without ASan",
+            "generator": "MinGW Makefiles",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+                "CMAKE_C_COMPILER": "",
+                "CMAKE_CXX_COMPILER": ""
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "wsl-gcc-debug",
+            "configurePreset": "wsl-gcc-debug"
+        },
+        {
+            "name": "win-mingw-debug",
+            "configurePreset": "win-mingw-debug"
+        }
+    ]
+}
