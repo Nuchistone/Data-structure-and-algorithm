@@ -1,0 +1,36 @@
+/**
+ * @mainpage Data-structure-and-algorithm
+ * 
+ * @section intro Introduction
+ * A study project for data structures and algorithms,
+ * implemented in C++. It includes implementations of
+ * basic data structures, algorithms, and test files.
+ * 
+ * @section modules Modules
+ * - @ref sequence_containers
+ * - @ref container_adaptors
+ * - @ref tree_containers
+ */
+
+/**
+ * @defgroup sequence_containers Sequence Containers
+ * @brief Sequence containers, including Array(dynamic
+ *        array), List (doubly linked list).
+ * @details Elements are ordered as the order they
+ *          are added.
+ */
+
+/**
+ * @defgroup container_adaptors Container Adaptors
+ * @brief Container adaptors, including Stack, Queue.
+ * @details Encapsulate containers providing specific
+ *          interfaces to standard DSs.
+ */
+
+/**
+ * @defgroup tree_containers Tree Containers
+ * @brief Containers with tree structure, including
+ *        BST (binary search tree).
+ * @details Elements are arranged in tree-like
+ *          structure.
+ */
