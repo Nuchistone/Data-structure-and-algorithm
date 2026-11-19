@@ -5,7 +5,10 @@
 #include <vector>
 #include <functional>
 
+// ==============================
 // checks
+// ==============================
+
 namespace test_util_details
 {
     struct TestFailure
@@ -60,6 +63,24 @@ namespace test_util_details
         fail(
             a == b,
             std::string("CHECK_EQUAL(") + a_str + ", " + b_str +")",
+            file,
+            line
+        );
+    }
+
+    template <typename L_type, typename R_type>
+    void check_not_equal_impl(
+        const L_type& a, 
+        const R_type& b, 
+        const char* a_str, 
+        const char* b_str, 
+        const char* file, 
+        int line
+    )
+    {
+        fail(
+            a != b,
+            std::string("CHECK_NOT_EQUAL(") + a_str + ", " + b_str +")",
             file,
             line
         );
@@ -144,6 +165,9 @@ namespace test_util_details
 #define CHECK_EQUAL(a, b)   \
     test_util_details::check_equal_impl((a), (b), #a, #b, __FILE__, __LINE__)
 
+#define CHECK_NOT_EQUAL(a, b)   \
+    test_util_details::check_not_equal_impl((a), (b), #a, #b, __FILE__, __LINE__)
+
 #define CHECK_CONTAINER_INVARIANTS(container)   \
     test_util_details::check_container_invariants_impl((container), #container, __FILE__, __LINE__)
 
@@ -151,9 +175,13 @@ namespace test_util_details
     test_util_details::check_throws_impl<exception_type>(   \
         [&]() { (void)(func); }, #func, #exception_type, __FILE__, __LINE__)
 
+// ==============================
 // Tracker: lifetime examine
+// ==============================
+
 struct Tracker
 {
+    friend bool operator==(const Tracker&, const Tracker&);
     // counter, recording the times 
     // of construction, destruction, copy and move
     static int construct_count_;
@@ -163,7 +191,10 @@ struct Tracker
 
     int value_;
 
+    // ==============================
     // constructor, copy controller
+    // ==============================
+
     Tracker()
         : value_(0)
     {
@@ -204,7 +235,10 @@ struct Tracker
         ++destruct_count_;
     }
 
+    // ==============================
     // reset the counters
+    // ==============================
+    
     static void reset()
     {
         construct_count_ = 0;
@@ -224,23 +258,63 @@ struct Tracker
             throw std::runtime_error(oss.str());
         }
     }
+
+    // ==============================
+    // operator
+    // ==============================
+
+    bool operator<(const Tracker& other) const
+    {
+        return value_ < other.value_;
+    }
+
+    bool operator>(const Tracker& other) const
+    {
+        return value_ > other.value_;
+    }
 };
+
+// ==============================
+// operator
+// ==============================
+
+bool operator==(const Tracker& a, const Tracker& b)
+{
+    return a.value_ == b.value_;
+}
+
+bool operator!=(const Tracker& a, const Tracker& b)
+{
+    return !(a == b);
+}
+
+// initialization
 inline int Tracker::construct_count_ = 0;
 inline int Tracker::destruct_count_ = 0;
 inline int Tracker::copy_count_ = 0;
 inline int Tracker::move_count_ = 0;
+
+// ==============================
+// CopyThrower
+// ==============================
 
 // CopyThrower: throw exception at assigned timing, 
 // which is designed to test exception throwing when 
 // copying and when moving but actually calls copy
 struct CopyThrower
 {
+    friend bool operator==(const CopyThrower&, const CopyThrower&);
+    // tracker, recording the times of
+    // copy and the timing to throwing
     static int copy_count_;
     static int throw_after_copy_;   // -1 = don't throw
 
     int value_;
 
+    // ==============================
     // constructor, copy controller
+    // ==============================
+
     CopyThrower() = default;
     explicit CopyThrower(int value)
         : value_(value)
@@ -262,27 +336,69 @@ struct CopyThrower
     }
     ~CopyThrower() = default;
 
+    // ==============================
     // reset the counters
+    // ==============================
+
     static void reset()
     {
         copy_count_ = 0;
         throw_after_copy_ = -1;
     }
+
+    // ==============================
+    // operator
+    // ==============================
+
+    bool operator<(const CopyThrower& other) const
+    {
+        return value_ < other.value_;
+    }
+
+    bool operator>(const CopyThrower& other) const
+    {
+        return value_ > other.value_;
+    }
 };
+
+// ==============================
+// operator
+// ==============================
+
+bool operator==(const CopyThrower& a, const CopyThrower& b)
+{
+    return a.value_ == b.value_;
+}
+
+bool operator!=(const CopyThrower& a, const CopyThrower& b)
+{
+    return !(a == b);
+}
+// initialization
 inline int CopyThrower::copy_count_ = 0;
 inline int CopyThrower::throw_after_copy_ = -1;
 
-// CopyThrower: throw exception at assigned timing, 
+// ==============================
+// MoveThrower
+// ==============================
+
+// MoveThrower: throw exception at assigned timing, 
 // which is designed to test exception throwing when 
 // moving
 struct MoveThrower
 {
+    friend bool operator==(const MoveThrower&, const MoveThrower&);
+    // counter, recording the times of
+    // move and the timing of throwing
     static int move_count_;
     static int throw_after_move_;
 
     int value_;
 
+    // ==============================
     // constructor, copy controller
+    // ==============================
+
     MoveThrower() = default;
     MoveThrower(int value)
         : value_(value)
@@ -310,17 +426,52 @@ struct MoveThrower
     }
     ~MoveThrower() = default;
 
+    // ==============================
     // reset the counters
+    // ==============================
+
     static void reset()
     {
         move_count_ = 0;
         throw_after_move_ = -1;
     }
+
+    // ==============================
+    // operator
+    // ==============================
+
+    bool operator<(const MoveThrower& other) const
+    {
+        return value_ < other.value_;
+    }
+
+    bool operator>(const MoveThrower& other) const
+    {
+        return value_ > other.value_;
+    }
 };
+
+// ==============================
+// operator
+// ==============================
+
+bool operator==(const MoveThrower& a, const MoveThrower& b)
+{
+    return a.value_ == b.value_;
+}
+
+bool operator!=(const MoveThrower& a, const MoveThrower& b)
+{
+    return !(a == b);
+}
+// initialization
 inline int MoveThrower::move_count_ = 0;
 inline int MoveThrower::throw_after_move_ = -1;
 
+// ==============================
 // registrar
+// ==============================
+
 struct TestCase
 {
     std::string name_;
@@ -379,6 +530,6 @@ inline int run_all_tests()
         std::cerr << std::endl;
     }
     std::cout << "passed: " << passed << ", failed: " << failed << std::endl;
-    std::system("PAUSE");
+    
     return failed ? 1 : 0;
 }
