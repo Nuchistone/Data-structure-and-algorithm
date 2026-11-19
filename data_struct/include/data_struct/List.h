@@ -227,6 +227,17 @@ namespace data_struct
         // swap
         void swap(List& other) noexcept;
 
+        /**
+         * @brief Swap Lists.
+         * @details Swaps sentinel's node fields and `size_`, O(1). Calls the member method swap().
+         */
+        friend void swap(List& a, List& b) noexcept // hidden friend
+        {
+            a.swap(b);
+        }
+
+        /** @} */   // name List Swap
+
     private:
         Node sentinel_;
         std::size_t size_;
@@ -235,14 +246,33 @@ namespace data_struct
         void transfer(iterator pos, iterator first, iterator last);
     };  // template class List
 
+    /**
+     * @name List Operator
+     * @{
+     */
+
+    /**
+     * @brief Judges whether two Lists has the same elements
+     *        in the same order.
+     * @tparam T The type of List tempalte.
+     * @relates data_struct::List
+     */
     template <typename T>
     bool operator==(const List<T>&, const List<T>&);
 
+    /**
+     * @brief Judges whether two Lists has different elements
+     *        or has the same elements but not in the same order.
+     * @tparam T The type of List tempalte.
+     * @relates data_struct::List
+     */
     template <typename T>
-    void swap(List<T>& a, List<T>& b) noexcept
+    bool operator!=(const List<T>& lhs, const List<T>& rhs)
     {
-        a.swap(b);
+        return !(lhs == rhs);
     }
+
+    /** @} */   // name List Operator
 }   // namespace data_struct
 
 #include "List.tpp"

@@ -438,7 +438,10 @@ namespace data_struct
     }
 
     template <typename T>
-    bool operator==(const List<T>& lhs, const List<T>& rhs)
+    bool operator==(
+        const List<T>& lhs,
+        const List<T>& rhs
+    )
     {
         if (lhs.size() != rhs.size())
         {
