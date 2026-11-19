@@ -6,7 +6,17 @@
 
 namespace data_struct
 {
+    // Link the nodes carfully in a proper order
+    // at any time modifying nodes to prevent
+    // memory leaks
+
+
+    // ==============================
     // Node
+    // ==============================
+
+    // Default constructor, default constructor of T
+    // will be called explicitly.
     template <typename T>
     List<T>::Node::Node()
         : data_()
@@ -31,8 +41,14 @@ namespace data_struct
     {
     }
 
+    // ==============================
     // List
+    // ==============================
+
+    // ==============================
     // constructor, copy controller
+    // ==============================
+
     template <typename T>
     List<T>::List()
         : sentinel_()
@@ -120,7 +136,10 @@ namespace data_struct
         return *this;
     }
 
+    // ==============================
     // getter
+    // ==============================
+
     template <typename T>
     T& List<T>::front()
     {
@@ -153,7 +172,10 @@ namespace data_struct
         return sentinel_.prev_->data_;
     }
 
+    // ==============================
     // mutator
+    // ==============================
+
     template <typename T>
     void List<T>::push_front(const T& value)
     {
@@ -345,7 +367,10 @@ namespace data_struct
         return end_it;
     }
 
+    // ==============================
     // algorithm
+    // ==============================
+
     template <typename T>
     typename List<T>::iterator
         List<T>::find(const T& value)
@@ -393,7 +418,10 @@ namespace data_struct
         }
     }
 
+    // ==============================
     // swap
+    // ==============================
+
     template <typename T>
     void List<T>::swap(List& other) noexcept
     {
@@ -410,7 +438,10 @@ namespace data_struct
         other.sentinel_.prev_->next_ = other.sentinel_.next_->prev_ = &other.sentinel_;
     }
 
+    // ==============================
     // transfer
+    // ==============================
+
     template <typename T>
     void List<T>::transfer(
         typename List<T>::iterator pos,
