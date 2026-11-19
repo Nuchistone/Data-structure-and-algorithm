@@ -359,6 +359,8 @@ namespace data_struct
         List<T>::iterator end_it
     )
     {
+        assert(start_it != end() && end_it != end() && "data_struct::List::erase: erase end()");
+
         if (start_it == end_it)
         {
             return end_it;
